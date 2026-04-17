@@ -347,18 +347,9 @@
         </div>
         <div class="guide-steps" id="guide-steps-container"></div>
         <div class="guide-proceed-btn">
-          <button class="nav-btn nav-btn-next" onclick="goToStep(1)" style="padding:9px 20px;font-size:0.88rem">
+          <button class="nav-btn nav-btn-next" onclick="startComplexApp()" style="padding:9px 20px;font-size:0.88rem">
             이 앱으로 Step 1 시작 →
           </button>
-        </div>
-      </div>
-
-      <div class="ref-link-box animate delay-2">
-        <div class="ref-icon">🔗</div>
-        <div class="ref-text">
-          <strong>실제 선생님이 만든 GAS 앱 25개 참고!</strong><br>
-          <a href="https://kimju1416.github.io/kimju/" target="_blank" rel="noopener">kimju1416.github.io/kimju</a>
-          — 체육 선생님이 직접 만든 퀴즈·모둠 편성·상담 예약 앱 (5분 설치 가능)
         </div>
       </div>
 
@@ -386,6 +377,22 @@
             약 5분
           </span>
         </div>
+      </div>
+
+      <!-- 심화 앱 선택 시 전용 배너 -->
+      <div id="complex-app-banner" style="display:none;margin-bottom:24px">
+        <div style="padding:4px 0 10px;display:flex;align-items:center;gap:8px">
+          <span id="banner-icon" style="font-size:1.5rem"></span>
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;color:#C4B5FD;text-transform:uppercase;letter-spacing:0.1em">선택한 심화 앱</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text)" id="banner-app-name"></div>
+          </div>
+        </div>
+        <div style="font-size:0.83rem;color:var(--text-secondary);padding:10px 14px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:10px;margin-bottom:12px;line-height:1.6">
+          이 앱은 <strong style="color:#C4B5FD">여러 번에 나눠서</strong> AI에게 요청해야 완성돼요.<br>
+          아래 순서대로 각 프롬프트를 단계별로 AI에 보내세요.
+        </div>
+        <div id="banner-guide-steps" style="display:flex;flex-direction:column;gap:8px"></div>
       </div>
 
       <!-- 5요소 구조 안내 -->
@@ -927,6 +934,53 @@
       }
     };
 
+    // ── 선택된 심화 앱 추적 ──
+    var selectedAppIdx = null;
+    var appIcons = ['📝','💬','👥','📅','✅','📚','🖱️','🔍','📊'];
+
+    // Step 0 가이드 → Step 1 이동 (심화 앱 전용)
+    function startComplexApp() {
+      updateComplexAppBanner(selectedAppIdx);
+      goToStep(1);
+    }
+
+    // Step 1 배너 렌더링
+    function updateComplexAppBanner(idx) {
+      var banner = document.getElementById('complex-app-banner');
+      var guide = appGuides[idx];
+      if (!guide) { banner.style.display = 'none'; return; }
+
+      document.getElementById('banner-icon').textContent = appIcons[idx] || '🔧';
+      document.getElementById('banner-app-name').textContent = guide.name;
+
+      var container = document.getElementById('banner-guide-steps');
+      container.innerHTML = '';
+      guide.steps.forEach(function(step, i) {
+        var promptHtml = '';
+        if (step.prompt) {
+          promptHtml =
+            '<div style="margin-top:6px;padding:8px 10px;background:rgba(13,148,136,0.07);border-left:2px solid rgba(13,148,136,0.4);border-radius:0 6px 6px 0;font-size:0.79rem;color:var(--text-secondary);font-style:italic;line-height:1.6">' +
+            '💬 ' + step.prompt + '</div>';
+        }
+        var isPrep = !step.prompt;
+        container.innerHTML +=
+          '<div style="display:flex;align-items:flex-start;gap:10px;padding:11px 13px;background:var(--surface);border:1px solid ' +
+          (isPrep ? 'var(--border)' : 'rgba(99,102,241,0.28)') +
+          ';border-radius:10px">' +
+            '<span style="min-width:24px;height:24px;border-radius:50%;background:' +
+            (isPrep ? 'rgba(165,180,252,0.12)' : 'rgba(99,102,241,0.22)') +
+            ';color:' + (isPrep ? 'var(--text-secondary)' : '#C4B5FD') +
+            ';display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0;margin-top:1px">' + (i+1) + '</span>' +
+            '<div style="flex:1">' +
+              '<div style="font-size:0.87rem;font-weight:700;color:var(--text)">' + step.title + '</div>' +
+              '<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:3px;line-height:1.5">' + step.desc + '</div>' +
+              promptHtml +
+            '</div>' +
+          '</div>';
+      });
+      banner.style.display = 'block';
+    }
+
     function renderGuide(idx) {
       var guide = appGuides[idx];
       var box = document.getElementById('app-guide-box');
@@ -955,6 +1009,8 @@
     }
 
     function selectApp(idx) {
+      selectedAppIdx = idx;
+
       // 카드 선택 표시
       document.querySelectorAll('.app-card').forEach(function(c) { c.classList.remove('selected'); });
       document.getElementById('card-' + idx).classList.add('selected');
@@ -968,11 +1024,13 @@
       chips.forEach(function(c) { c.classList.remove('active'); });
       if (idx < chips.length - 1) chips[idx].classList.add('active');
 
-      // 심화 앱은 가이드 박스 표시 후 대기, 간단 앱은 바로 Step 1 이동
+      // 심화 앱: Step 0에 가이드 표시 후 대기
+      // 일반 앱: 배너 초기화 후 바로 Step 1 이동
       if (appGuides[idx]) {
         renderGuide(idx);
       } else {
         document.getElementById('app-guide-box').style.display = 'none';
+        document.getElementById('complex-app-banner').style.display = 'none';
         goToStep(1);
       }
     }
