@@ -186,9 +186,75 @@
     }
     @media (prefers-reduced-motion:reduce) { * { animation:none!important;transition:none!important; } }
     @media print {
-      .viz-menu,.step-nav,.step-nav-btns,.progress-bar { display:none!important; }
+      .viz-menu,.step-nav,.step-nav-btns,.progress-bar,.glossary-fab,.glossary-modal { display:none!important; }
       .step-panel { display:block!important;page-break-after:always; }
     }
+
+    /* ── 오늘의 약속 (Step 0 인트로) ── */
+    .pledge-box { background:linear-gradient(135deg,rgba(13,148,136,0.12),rgba(99,102,241,0.10));
+      border:1px solid rgba(13,148,136,0.35);border-radius:16px;padding:22px 24px;margin-bottom:24px;position:relative; }
+    .pledge-header { display:flex;align-items:center;gap:10px;margin-bottom:14px; }
+    .pledge-header h3 { font-size:1.05rem;font-weight:700;color:var(--text);margin:0; }
+    .pledge-emoji { font-size:1.5rem; }
+    .pledge-list { display:grid;grid-template-columns:repeat(3,1fr);gap:14px; }
+    .pledge-item { background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 14px 12px; }
+    .pledge-num { font-size:0.7rem;font-weight:800;color:var(--accent);letter-spacing:0.1em;margin-bottom:6px; }
+    .pledge-title { font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.3; }
+    .pledge-desc { font-size:0.78rem;color:var(--text-secondary);line-height:1.5; }
+    @media (max-width:768px) { .pledge-list { grid-template-columns:1fr; } }
+
+    /* ── 이번 단계가 끝나면 (Outcome 박스) ── */
+    .outcome-box { display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:rgba(16,185,129,0.08);
+      border-left:3px solid var(--positive);border-radius:0 8px 8px 0;margin:-4px 0 18px;font-size:0.86rem;color:var(--text);line-height:1.55; }
+    .outcome-box .oc-label { font-weight:700;color:var(--positive);white-space:nowrap;flex-shrink:0; }
+    .outcome-box strong { color:var(--positive); }
+
+    /* ── 자주 하는 실수 ── */
+    .pitfall-box { background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.32);
+      border-radius:12px;padding:14px 16px;margin:18px 0; }
+    .pitfall-header { display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:0.88rem;font-weight:700;color:var(--amber); }
+    .pitfall-list { display:flex;flex-direction:column;gap:8px; }
+    .pitfall-item { display:flex;gap:10px;font-size:0.84rem;color:var(--text);line-height:1.55; }
+    .pitfall-item .pf-x { color:#EF4444;font-weight:700;flex-shrink:0; }
+    .pitfall-item .pf-arrow { color:var(--accent);font-weight:700; }
+    .pitfall-item .pf-fix { color:var(--text-secondary); }
+
+    /* ── 용어사전 플로팅 버튼 + 모달 ── */
+    .glossary-fab { position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;
+      background:var(--accent);color:white;border:none;cursor:pointer;font-size:1.3rem;font-weight:700;
+      box-shadow:0 6px 20px rgba(13,148,136,0.45);z-index:9998;display:flex;align-items:center;justify-content:center;
+      transition:all 0.2s; }
+    .glossary-fab:hover { transform:scale(1.08);box-shadow:0 8px 28px rgba(13,148,136,0.55); }
+    .glossary-modal { display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);
+      align-items:center;justify-content:center;padding:20px; }
+    .glossary-modal.open { display:flex; }
+    .glossary-content { background:var(--surface);border:1px solid var(--border);border-radius:16px;
+      max-width:600px;width:100%;max-height:80vh;overflow-y:auto;padding:24px 28px; }
+    .glossary-content h3 { font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px; }
+    .glossary-content .gloss-sub { font-size:0.85rem;color:var(--text-secondary);margin-bottom:20px; }
+    .glossary-list { display:flex;flex-direction:column;gap:14px; }
+    .gloss-term { padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px; }
+    .gloss-term-name { font-weight:700;color:var(--accent);font-size:0.95rem;margin-bottom:4px; }
+    .gloss-term-name code { background:rgba(13,148,136,0.15);color:var(--accent);padding:1px 7px;border-radius:4px;font-size:0.85rem;font-family:'Inter',monospace; }
+    .gloss-term-def { font-size:0.85rem;color:var(--text);line-height:1.6; }
+    .gloss-term-def em { color:var(--text-secondary);font-style:normal;font-size:0.8rem;display:block;margin-top:3px; }
+    .glossary-close { float:right;background:transparent;border:none;color:var(--text-secondary);
+      font-size:1.4rem;cursor:pointer;padding:0 6px;line-height:1; }
+    .glossary-close:hover { color:var(--text); }
+
+    /* ── 강사 멘트 마무리 박스 (Step 7) ── */
+    .instructor-msg { background:linear-gradient(135deg,rgba(99,102,241,0.10),rgba(13,148,136,0.08));
+      border:1px solid rgba(99,102,241,0.32);border-radius:16px;padding:24px;margin-top:24px; }
+    .instructor-msg-header { display:flex;align-items:center;gap:10px;margin-bottom:14px; }
+    .instructor-msg-header h3 { font-size:1.05rem;font-weight:700;color:var(--text);margin:0; }
+    .instructor-msg-body { font-size:0.92rem;color:var(--text);line-height:1.75; }
+    .instructor-msg-body strong { color:#C4B5FD; }
+    .instructor-msg-quote { margin-top:14px;padding:12px 16px;background:rgba(99,102,241,0.06);
+      border-left:3px solid #A78BFA;border-radius:0 8px 8px 0;font-style:italic;font-size:0.9rem;color:var(--text-secondary);line-height:1.7; }
+
+    /* ── Mini callout — 강사 진행 마커 ── */
+    .pace-marker { display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:12px;
+      background:rgba(13,148,136,0.12);color:var(--accent);font-size:0.78rem;font-weight:600;margin-bottom:10px; }
   </style>
 </head>
 <body>
@@ -266,6 +332,31 @@
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             약 2분
           </span>
+        </div>
+      </div>
+
+      <!-- 오늘의 약속 3가지 -->
+      <div class="pledge-box animate delay-1">
+        <div class="pledge-header">
+          <span class="pledge-emoji">🤝</span>
+          <h3>시작하기 전 — 오늘 우리만의 약속 3가지</h3>
+        </div>
+        <div class="pledge-list">
+          <div class="pledge-item">
+            <div class="pledge-num">PROMISE 01</div>
+            <div class="pledge-title">코드를 이해하지 않아도 OK</div>
+            <div class="pledge-desc">AI가 만들어준 코드는 그냥 복사·붙여넣기만 해도 됩니다. 의미는 몰라도 작동합니다.</div>
+          </div>
+          <div class="pledge-item">
+            <div class="pledge-num">PROMISE 02</div>
+            <div class="pledge-title">막혀도 괜찮아요</div>
+            <div class="pledge-desc">옆 선생님께 묻거나, 강사를 부르거나, AI에게 다시 질문하세요. 막히는 게 정상입니다.</div>
+          </div>
+          <div class="pledge-item">
+            <div class="pledge-num">PROMISE 03</div>
+            <div class="pledge-title">절반만 따라와도 성공</div>
+            <div class="pledge-desc">완성 못 해도 됩니다. "오늘 AI에게 한 번 코드 받아봤다"면 큰 한 걸음입니다.</div>
+          </div>
         </div>
       </div>
 
@@ -377,6 +468,12 @@
             약 5분
           </span>
         </div>
+      </div>
+
+      <!-- 이번 단계가 끝나면 -->
+      <div class="outcome-box animate delay-1">
+        <span class="oc-label">✓ 끝나면</span>
+        <span>AI가 제안한 <strong>기능 5가지 + 디자인 3종</strong>이 채팅창에 떠 있게 됩니다. 그 중 마음에 드는 걸 다음 단계에서 고를 거예요.</span>
       </div>
 
       <!-- 심화 앱 선택 시 전용 배너 -->
@@ -501,6 +598,12 @@
         </div>
       </div>
 
+      <!-- 이번 단계가 끝나면 -->
+      <div class="outcome-box animate delay-1">
+        <span class="oc-label">✓ 끝나면</span>
+        <span>AI가 <strong>최종 기능·화면 구성 요약</strong>을 보여줍니다. 그걸 확인하고 Step 3에서 코드를 받습니다.</span>
+      </div>
+
       <!-- 디자인 스타일 선택 칩 -->
       <div class="animate delay-1" style="margin-bottom:20px">
         <div class="section-label">원하는 UI 디자인 스타일을 골라보세요 (AI 제안 참고해서 선택)</div>
@@ -557,6 +660,31 @@
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             약 2분
           </span>
+        </div>
+      </div>
+
+      <!-- 이번 단계가 끝나면 -->
+      <div class="outcome-box animate delay-1">
+        <span class="oc-label">✓ 끝나면</span>
+        <span>AI가 <strong>실행 가능한 전체 코드 한 덩어리</strong>를 만들어줍니다. 복사해서 다음 단계에서 붙여넣기만 하면 끝!</span>
+      </div>
+
+      <!-- 자주 하는 실수 -->
+      <div class="pitfall-box animate delay-1">
+        <div class="pitfall-header">⚠️ 코드 받을 때 자주 하는 실수 — 미리 알아두세요</div>
+        <div class="pitfall-list">
+          <div class="pitfall-item">
+            <span class="pf-x">✗</span>
+            <span><strong>설명만 받고 코드를 못 받음</strong> <span class="pf-arrow">→</span> <span class="pf-fix">"코드 블록으로 전체 코드만 먼저" 문구를 꼭 포함하세요.</span></span>
+          </div>
+          <div class="pitfall-item">
+            <span class="pf-x">✗</span>
+            <span><strong>코드가 잘려서 나옴 (특히 ChatGPT)</strong> <span class="pf-arrow">→</span> <span class="pf-fix">"이어서 보여줘" 또는 "전체 코드를 한 번에 줘"라고 다시 요청하세요.</span></span>
+          </div>
+          <div class="pitfall-item">
+            <span class="pf-x">✗</span>
+            <span><strong>doGet() 빠짐</strong> <span class="pf-arrow">→</span> <span class="pf-fix">코드 첫 줄이 <code>function doGet()</code>인지 확인. 없으면 "doGet()으로 다시 만들어줘".</span></span>
+          </div>
         </div>
       </div>
 
@@ -617,6 +745,12 @@
         </div>
       </div>
 
+      <!-- 이번 단계가 끝나면 -->
+      <div class="outcome-box animate delay-1">
+        <span class="oc-label">✓ 끝나면</span>
+        <span><strong>스마트폰으로 접속 가능한 웹앱 URL</strong>이 손에 쥐어집니다. 학생·동료에게 바로 공유할 수 있어요.</span>
+      </div>
+
       <!-- 개인 gmail OK 안내 -->
       <div class="gmail-ok-box animate delay-1">
         <div class="go-icon">✅</div>
@@ -659,6 +793,25 @@
         </div>
       </div>
 
+      <!-- 자주 하는 실수 -->
+      <div class="pitfall-box animate delay-3">
+        <div class="pitfall-header">⚠️ 배포할 때 자주 하는 실수</div>
+        <div class="pitfall-list">
+          <div class="pitfall-item">
+            <span class="pf-x">✗</span>
+            <span><strong>액세스 권한을 "본인만"으로 둠</strong> <span class="pf-arrow">→</span> <span class="pf-fix">반드시 <code>모든 사용자</code>로 변경. 학생이 접속 못 하는 가장 흔한 원인.</span></span>
+          </div>
+          <div class="pitfall-item">
+            <span class="pf-x">✗</span>
+            <span><strong>처음 배포할 때 권한 허용 팝업에서 멈춤</strong> <span class="pf-arrow">→</span> <span class="pf-fix">"고급" → "안전하지 않은 페이지로 이동" → "허용" 클릭하면 됩니다 (정상 절차).</span></span>
+          </div>
+          <div class="pitfall-item">
+            <span class="pf-x">✗</span>
+            <span><strong>코드 수정 후 같은 URL 그대로 사용</strong> <span class="pf-arrow">→</span> <span class="pf-fix">재배포 시 "배포 관리" → 연필 아이콘 → 버전 "새 버전"으로 변경 후 배포.</span></span>
+          </div>
+        </div>
+      </div>
+
       <div class="tip-box animate delay-3">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <span>처음 배포 시 <strong>구글 권한 허용 팝업</strong>이 뜰 수 있어요. "계속" → "허용" 클릭하면 됩니다. 코드 수정 후 재배포할 때는 "새 버전"으로 다시 배포하세요.</span>
@@ -681,6 +834,12 @@
             필요할 때만 진행
           </span>
         </div>
+      </div>
+
+      <!-- 이번 단계가 끝나면 -->
+      <div class="outcome-box animate delay-1">
+        <span class="oc-label">✓ 끝나면</span>
+        <span>오류가 사라진 <strong>새 코드</strong>를 받아 다시 붙여넣고 재배포하면 정상 작동합니다.</span>
       </div>
 
       <div class="prompt-section animate delay-1">
@@ -742,6 +901,12 @@
             선택 사항
           </span>
         </div>
+      </div>
+
+      <!-- 이번 단계가 끝나면 -->
+      <div class="outcome-box animate delay-1">
+        <span class="oc-label">✓ 끝나면</span>
+        <span>처음보다 <strong>한 단계 업그레이드된 앱</strong>이 됩니다. 이 과정을 반복하며 점점 완성도를 높여가는 게 "바이브코딩"의 핵심!</span>
       </div>
 
       <div class="prompt-section animate delay-1">
@@ -827,6 +992,33 @@
         <span>오늘 만든 코드는 <strong style="color:var(--accent)">script.google.com</strong>에 저장돼 있어요. 언제든 다시 열어서 수정하거나 기능을 추가할 수 있습니다!</span>
       </div>
 
+      <!-- 강사 멘트 마무리 -->
+      <div class="instructor-msg animate delay-3">
+        <div class="instructor-msg-header">
+          <span style="font-size:1.4rem">🎤</span>
+          <h3>마무리 — 오늘 우리가 배운 것</h3>
+        </div>
+        <div class="instructor-msg-body">
+          오늘 우리는 <strong>"코드를 짜는 법"</strong>이 아니라 <strong>"AI에게 코드를 부탁하는 법"</strong>을 배웠습니다.<br>
+          이 변화의 핵심은 단 하나입니다 — <strong>아이디어가 있으면 만들 수 있다.</strong><br><br>
+
+          앞으로 수업이나 업무에서 "이런 게 있으면 좋을 텐데…" 싶을 때, 망설이지 말고 AI에게 말을 걸어보세요.
+          오늘 만든 8단계 흐름(아이디어 → 기능 → 코드 → 배포 → 수정 → 추가)만 기억하면, 어떤 앱이든 다 만들 수 있습니다.<br><br>
+
+          <strong style="color:var(--accent)">3가지 다음 행동 (Next Action)</strong>
+          <ul style="margin:8px 0 0 22px;line-height:1.85;color:var(--text)">
+            <li>오늘 만든 앱을 <strong>실제 수업·업무에서 한 번</strong> 써보세요. 안 써본 앱은 "만든 적 없는 것"과 같습니다.</li>
+            <li>다음 주 안에 <strong>새 앱을 하나 더</strong> 만들어 보세요. 두 번째부터 진짜 익숙해집니다.</li>
+            <li><strong>동료 선생님 1명</strong>에게 오늘 배운 걸 설명해 주세요. 가르칠 때 가장 잘 배웁니다.</li>
+          </ul>
+
+          <div class="instructor-msg-quote">
+            "AI 시대의 교사는 코드를 짜는 사람이 아니라, <strong>좋은 질문을 던지는 사람</strong>이다.<br>
+            오늘 선생님들은 그 첫 질문을 던지셨습니다."
+          </div>
+        </div>
+      </div>
+
       <div class="step-nav-btns">
         <button class="nav-btn nav-btn-prev" onclick="goToStep(6)">← 이전</button>
         <button class="nav-btn nav-btn-next" onclick="goToStep(0)" style="background:var(--positive)">처음으로 ↺</button>
@@ -834,6 +1026,66 @@
     </section>
 
   </main>
+
+  <!-- 용어사전 플로팅 버튼 -->
+  <button class="glossary-fab" onclick="toggleGlossary()" aria-label="용어사전" title="용어사전 — 모르는 단어가 있다면">
+    <span style="font-size:1.5rem">📖</span>
+  </button>
+
+  <!-- 용어사전 모달 -->
+  <div class="glossary-modal" id="glossaryModal" onclick="if(event.target===this)toggleGlossary()">
+    <div class="glossary-content">
+      <button class="glossary-close" onclick="toggleGlossary()" aria-label="닫기">×</button>
+      <h3>📖 워크숍 용어사전</h3>
+      <div class="gloss-sub">처음 들어보는 단어가 나와도 괜찮아요. 핵심 11개만 기억하세요.</div>
+      <div class="glossary-list">
+        <div class="gloss-term">
+          <div class="gloss-term-name">프롬프트 (Prompt)</div>
+          <div class="gloss-term-def">AI에게 보내는 <strong>지시문 / 부탁 메시지</strong>. 잘 쓰면 좋은 코드가, 대충 쓰면 엉뚱한 코드가 나옵니다.<em>예: "수학 퀴즈 앱을 만들어줘"</em></div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name">바이브코딩 (Vibe Coding)</div>
+          <div class="gloss-term-def">코드를 직접 짜지 않고 <strong>AI에게 원하는 느낌·기능을 말로 설명</strong>하면서 점점 다듬어가는 방식. 오늘 우리가 하는 게 바이브코딩입니다.</div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name">구글 앱스크립트 (Google Apps Script, GAS)</div>
+          <div class="gloss-term-def">구글이 만든 <strong>무료 코드 실행 환경</strong>. 별도 서버 없이 구글 시트·드라이브와 연결된 웹앱을 만들 수 있어요. 접속: <code>script.google.com</code></div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name"><code>doGet()</code></div>
+          <div class="gloss-term-def">사용자가 웹앱 URL에 접속할 때 <strong>가장 먼저 실행되는 함수</strong>. 우리 앱에서는 이 안에 모든 화면(HTML)이 들어갑니다.<em>이 함수가 없으면 앱이 안 돌아가요!</em></div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name"><code>HtmlService</code></div>
+          <div class="gloss-term-def">앱스크립트가 <strong>HTML 화면을 사용자에게 보여주는 도구</strong>. <code>HtmlService.createHtmlOutput(html)</code> 형태로 사용합니다.</div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name">배포 (Deploy)</div>
+          <div class="gloss-term-def">내가 짠 코드를 <strong>인터넷에 공개해서 URL로 접속 가능하게</strong> 만드는 작업. 배포 후 받은 링크를 학생에게 공유하면 됩니다.</div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name">웹 앱 (Web App)</div>
+          <div class="gloss-term-def">설치 없이 <strong>인터넷 브라우저에서 바로 쓰는 앱</strong>. 스마트폰·PC에서 같은 URL로 접속 가능하기 때문에 학교 환경에 가장 적합합니다.</div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name">SHEET_ID</div>
+          <div class="gloss-term-def">구글 스프레드시트의 <strong>고유 식별 번호</strong>. URL에서 <code>/d/</code>와 <code>/edit</code> 사이 긴 문자열입니다.<em>예: docs.google.com/spreadsheets/d/<strong>여기가 SHEET_ID</strong>/edit</em></div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name"><code>google.script.run</code></div>
+          <div class="gloss-term-def">화면(브라우저)에서 <strong>서버 함수를 호출</strong>할 때 쓰는 명령. 시트 저장·조회 등에 필요합니다. 외울 필요 없고 AI가 알아서 써줍니다.</div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name"><code>setInterval</code></div>
+          <div class="gloss-term-def">JavaScript에서 <strong>일정 시간마다 어떤 일을 반복 실행</strong>하는 함수. 칸반 보드의 "10초 자동 새로고침"이 이걸로 만듭니다.</div>
+        </div>
+        <div class="gloss-term">
+          <div class="gloss-term-name">반응형 디자인 (Responsive Design)</div>
+          <div class="gloss-term-def">PC, 태블릿, 스마트폰 등 <strong>화면 크기가 달라져도 자연스럽게 보이는 디자인</strong>. 학생들이 폰으로 접속하므로 필수입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ── Theme ──
@@ -852,6 +1104,16 @@
 
     // ── Menu ──
     function toggleMenu() { document.getElementById('vizMenuDropdown').classList.toggle('open'); }
+    function toggleGlossary() {
+      var m = document.getElementById('glossaryModal');
+      if (m) m.classList.toggle('open');
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var m = document.getElementById('glossaryModal');
+        if (m && m.classList.contains('open')) m.classList.remove('open');
+      }
+    });
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.viz-menu')) {
         var d = document.getElementById('vizMenuDropdown');
