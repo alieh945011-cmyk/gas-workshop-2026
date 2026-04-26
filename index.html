@@ -256,6 +256,79 @@
     .pace-marker { display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:12px;
       background:rgba(13,148,136,0.12);color:var(--accent);font-size:0.78rem;font-weight:600;margin-bottom:10px; }
 
+    /* ── API 가이드 배너 버튼 (Step 0) ── */
+    .api-guide-strip { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+      background:linear-gradient(135deg,rgba(99,102,241,0.10),rgba(13,148,136,0.07));
+      border:1px solid rgba(99,102,241,0.28);border-radius:12px;padding:12px 18px;margin-bottom:18px; }
+    .api-guide-strip-text { font-size:0.83rem;color:var(--text-secondary);line-height:1.5; }
+    .api-guide-strip-text strong { color:var(--text); }
+    .api-guide-open-btn { display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;
+      background:var(--accent);color:white;border:none;font-size:0.82rem;font-weight:700;cursor:pointer;
+      white-space:nowrap;transition:all 0.15s; }
+    .api-guide-open-btn:hover { background:#0B8070;transform:scale(1.03); }
+
+    /* ── API 가이드 모달 ── */
+    .api-modal { display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.72);
+      align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto; }
+    .api-modal.open { display:flex; }
+    .api-modal-wrap { background:var(--surface);border:1px solid var(--border);border-radius:20px;
+      max-width:660px;width:100%;margin:auto;padding:28px 30px;position:relative; }
+    @media(max-width:600px){ .api-modal-wrap { padding:20px 16px; } }
+    .api-modal-hd { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px; }
+    .api-modal-title { font-size:1.15rem;font-weight:800;color:var(--text); }
+    .api-modal-close { background:none;border:none;color:var(--text-secondary);font-size:1.5rem;
+      cursor:pointer;padding:0 4px;line-height:1;transition:color 0.12s; }
+    .api-modal-close:hover { color:var(--text); }
+    .api-modal-sub { font-size:0.83rem;color:var(--text-secondary);margin-bottom:22px;line-height:1.6; }
+    /* Steps */
+    .api-step { display:flex;gap:14px;margin-bottom:20px; }
+    .api-step-num { min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:white;
+      font-weight:800;font-size:0.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px; }
+    .api-step-body { flex:1;min-width:0; }
+    .api-step-title { font-weight:700;color:var(--text);margin-bottom:3px;font-size:0.92rem; }
+    .api-step-desc { font-size:0.81rem;color:var(--text-secondary);line-height:1.7;margin-bottom:8px; }
+    .api-step-desc strong { color:var(--text); }
+    .api-step-desc code { background:rgba(13,148,136,0.14);color:var(--accent);padding:1px 6px;border-radius:4px;font-family:monospace; }
+    /* UI Mockups */
+    .api-mock { background:#f1f5f9;border:1px solid #cbd5e1;border-radius:10px;overflow:hidden;
+      margin-top:6px;box-shadow:0 2px 10px rgba(0,0,0,0.12); }
+    .api-mock-bar { background:#dde3ec;padding:5px 10px;display:flex;align-items:center;gap:5px; }
+    .api-mock-dot { width:8px;height:8px;border-radius:50%; display:inline-block; }
+    .api-mock-url-box { background:white;border-radius:20px;padding:3px 14px;font-size:0.72rem;
+      color:#334155;flex:1;font-family:'JetBrains Mono',monospace;letter-spacing:0.01em; }
+    .api-mock-body { padding:10px 14px;background:white;color:#1e293b;font-size:0.78rem; }
+    .api-mock-layout { display:flex;min-height:80px; }
+    .api-mock-sidebar { width:148px;background:#f8fafc;border-right:1px solid #e2e8f0;padding:8px; }
+    .api-mock-nav-item { padding:5px 9px;border-radius:6px;font-size:0.73rem;color:#475569;margin-bottom:2px;display:flex;align-items:center;gap:6px; }
+    .api-mock-nav-item.active { background:#0D9488;color:white;font-weight:700; }
+    .api-mock-main { flex:1;padding:10px 14px;background:white;display:flex;flex-direction:column;justify-content:center; }
+    .api-mock-google-btn { display:inline-flex;align-items:center;gap:8px;background:white;border:1px solid #dadce0;border-radius:4px;padding:8px 16px;font-size:0.78rem;color:#3c4043;font-weight:500;margin:4px 0; }
+    .api-mock-blue-btn { display:inline-block;background:#1a73e8;color:white;padding:7px 16px;border-radius:6px;font-size:0.78rem;font-weight:600; }
+    .api-mock-blue-btn.highlight { box-shadow:0 0 0 3px rgba(26,115,232,0.35); }
+    .api-mock-dialog { background:white;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;max-width:260px;margin:4px auto;box-shadow:0 4px 16px rgba(0,0,0,0.15); }
+    .api-mock-dialog-title { font-size:0.8rem;font-weight:700;color:#1e293b;margin-bottom:8px; }
+    .api-mock-radio { display:flex;align-items:center;gap:8px;font-size:0.74rem;color:#334155;padding:5px;border-radius:4px;margin-bottom:3px; }
+    .api-mock-radio.selected { background:#e8f0fe; }
+    .api-mock-radio-dot { width:14px;height:14px;border-radius:50%;border:2px solid #1a73e8;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .api-mock-radio-dot.on::after { content:'';width:6px;height:6px;border-radius:50%;background:#1a73e8;display:block; }
+    .api-mock-key-box { display:flex;align-items:center;gap:6px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:7px 12px;font-family:monospace;font-size:0.75rem;color:#1e293b; }
+    .api-mock-key-val { flex:1; }
+    .api-mock-copy { background:#1a73e8;color:white;border:none;border-radius:4px;padding:3px 9px;font-size:0.69rem;font-weight:600;cursor:default; }
+    .api-mock-caption { font-size:0.71rem;color:#64748b;text-align:center;padding:4px 8px;background:#f8fafc;border-top:1px solid #e2e8f0; }
+    .api-mock-note { font-size:0.7rem;color:#0D9488;font-weight:600;margin-top:4px; }
+    /* Warnings */
+    .api-warn-section { margin-top:22px;border-top:1px solid var(--border);padding-top:18px; }
+    .api-warn-title { font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:12px; }
+    .api-warn-item { display:flex;gap:10px;margin-bottom:10px;padding:10px 13px;border-radius:10px;line-height:1.6; }
+    .api-warn-item.red   { background:rgba(239,68,68,0.07);border-left:3px solid #EF4444; }
+    .api-warn-item.yellow{ background:rgba(245,158,11,0.07);border-left:3px solid #F59E0B; }
+    .api-warn-item.green { background:rgba(16,185,129,0.07);border-left:3px solid #10B981; }
+    .api-warn-icon { font-size:1rem;line-height:1.6;flex-shrink:0; }
+    .api-warn-text { font-size:0.80rem;color:var(--text); }
+    .api-warn-text strong { color:var(--text); }
+    .api-modal-footer { margin-top:18px;padding-top:14px;border-top:1px solid var(--border);
+      font-size:0.76rem;color:var(--text-secondary);text-align:center;line-height:1.6; }
+
     /* ── 작성 이유 버튼 & 말풍선 팝업 ── */
     .why-btn { display:inline-flex;align-items:center;gap:3px;padding:2px 9px;border-radius:20px;
       border:1.5px solid rgba(251,191,36,0.55);background:rgba(251,191,36,0.10);color:#F59E0B;
@@ -430,6 +503,15 @@
             <div class="pledge-desc">완성 못 해도 됩니다. "오늘 AI에게 한 번 코드 받아봤다"면 큰 한 걸음입니다.</div>
           </div>
         </div>
+      </div>
+
+      <!-- API 가이드 배너 -->
+      <div class="api-guide-strip animate delay-1">
+        <div class="api-guide-strip-text">
+          <strong>🔑 Gemini AI 기능을 앱에 추가하고 싶다면 API 키가 필요해요.</strong><br>
+          무료로 발급받을 수 있어요 — 신용카드 불필요, 5분이면 끝!
+        </div>
+        <button class="api-guide-open-btn" onclick="toggleApiGuide()">📋 API 키 발급 방법 보기</button>
       </div>
 
       <div class="gallery-intro animate delay-1">
@@ -1105,6 +1187,235 @@
   </button>
 
   <!-- 용어사전 모달 -->
+  <!-- ══ API 발급 가이드 모달 ══ -->
+  <div class="api-modal" id="apiGuideModal" onclick="if(event.target===this)toggleApiGuide()">
+    <div class="api-modal-wrap">
+      <div class="api-modal-hd">
+        <div class="api-modal-title">🔑 구글 AI 스튜디오 API 키 발급 방법 (무료)</div>
+        <button class="api-modal-close" onclick="toggleApiGuide()" aria-label="닫기">×</button>
+      </div>
+      <p class="api-modal-sub">
+        API 키는 AI 서비스를 내 앱에서 사용하기 위한 <strong>'비밀 출입증'</strong>이에요.<br>
+        구글 AI 스튜디오에서 <strong>무료로</strong> 발급받을 수 있어요. 신용카드 필요 없고, 5분이면 충분합니다.
+      </p>
+
+      <!-- STEP 1 -->
+      <div class="api-step">
+        <div class="api-step-num">1</div>
+        <div class="api-step-body">
+          <div class="api-step-title">크롬 브라우저를 열고 주소창에 입력하세요</div>
+          <div class="api-step-desc">인터넷 주소창(URL 바)에 아래 주소를 입력하고 <strong>Enter</strong> 키를 누르세요.</div>
+          <div class="api-mock">
+            <div class="api-mock-bar">
+              <span class="api-mock-dot" style="background:#ff5f56"></span>
+              <span class="api-mock-dot" style="background:#ffbd2e"></span>
+              <span class="api-mock-dot" style="background:#27c93f"></span>
+              <div class="api-mock-url-box">aistudio.google.com</div>
+            </div>
+            <div class="api-mock-caption">↑ 주소창에 이렇게 입력하고 Enter 키를 누르세요</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="api-step">
+        <div class="api-step-num">2</div>
+        <div class="api-step-body">
+          <div class="api-step-title">구글 계정으로 로그인하세요</div>
+          <div class="api-step-desc">
+            기존 <strong>Gmail 계정</strong>이 있으면 바로 로그인할 수 있어요.<br>
+            이미 크롬에 로그인되어 있다면 이 단계가 자동으로 넘어갑니다.
+          </div>
+          <div class="api-mock">
+            <div class="api-mock-body" style="text-align:center;padding:14px;">
+              <div style="font-size:0.8rem;color:#1e293b;font-weight:700;margin-bottom:10px;">Google 계정으로 로그인</div>
+              <div class="api-mock-google-btn" style="margin:0 auto;display:inline-flex;">
+                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                Google 계정으로 계속하기
+              </div>
+            </div>
+            <div class="api-mock-caption">↑ 이 버튼을 클릭하거나, 이메일 입력 후 비밀번호를 입력하세요</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="api-step">
+        <div class="api-step-num">3</div>
+        <div class="api-step-body">
+          <div class="api-step-title">왼쪽 메뉴에서 "Get API key"를 클릭하세요</div>
+          <div class="api-step-desc">
+            로그인 후 화면 왼쪽 사이드바를 보면 <strong>"Get API key"</strong> (또는 <strong>"API 키 받기"</strong>) 항목이 있어요. 클릭하세요.
+          </div>
+          <div class="api-mock">
+            <div class="api-mock-layout">
+              <div class="api-mock-sidebar">
+                <div class="api-mock-nav-item">🏠 홈</div>
+                <div class="api-mock-nav-item">📚 내 라이브러리</div>
+                <div class="api-mock-nav-item active">🔑 Get API key</div>
+                <div class="api-mock-nav-item" style="opacity:0.5">⚙️ 설정</div>
+              </div>
+              <div class="api-mock-main">
+                <div style="font-size:0.75rem;color:#64748b;">← 왼쪽 메뉴에서<br><strong style="color:#0D9488">Get API key</strong>를<br>클릭하세요</div>
+              </div>
+            </div>
+            <div class="api-mock-caption">↑ 초록색으로 강조된 항목을 클릭하세요 (한국어 화면이면 "API 키 받기")</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="api-step">
+        <div class="api-step-num">4</div>
+        <div class="api-step-body">
+          <div class="api-step-title">파란색 "Create API key" 버튼을 클릭하세요</div>
+          <div class="api-step-desc">
+            API 키 목록 화면이 열리면 상단의 파란색 <strong>"Create API key"</strong> 버튼을 클릭하세요.
+          </div>
+          <div class="api-mock">
+            <div class="api-mock-body">
+              <div style="font-size:0.78rem;color:#475569;margin-bottom:8px;">내 API 키</div>
+              <span class="api-mock-blue-btn highlight">+ Create API key</span>
+              <div style="font-size:0.7rem;color:#94a3b8;margin-top:8px;">현재 등록된 키가 없습니다.</div>
+            </div>
+            <div class="api-mock-caption">↑ 파란 버튼을 클릭하세요 (한국어: "API 키 만들기")</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="api-step">
+        <div class="api-step-num">5</div>
+        <div class="api-step-body">
+          <div class="api-step-title">프로젝트를 선택하고 "Create API key" 확인을 클릭하세요</div>
+          <div class="api-step-desc">
+            팝업 창이 뜨면 <strong>"새 프로젝트에서 API 키 만들기"</strong>를 선택하거나, 처음 사용자라면 자동으로 기본 프로젝트가 선택됩니다.
+            그대로 <strong>"Create API key"</strong> 버튼을 누르세요.
+          </div>
+          <div class="api-mock">
+            <div class="api-mock-body" style="background:#f8fafc;">
+              <div class="api-mock-dialog">
+                <div class="api-mock-dialog-title">API 키를 만들 프로젝트 선택</div>
+                <div class="api-mock-radio selected">
+                  <div class="api-mock-radio-dot on"></div>
+                  새 프로젝트에서 API 키 만들기
+                </div>
+                <div class="api-mock-radio">
+                  <div class="api-mock-radio-dot"></div>
+                  기존 프로젝트 선택
+                </div>
+                <div style="margin-top:10px;text-align:right;">
+                  <span class="api-mock-blue-btn" style="font-size:0.73rem;padding:5px 12px;">Create API key</span>
+                </div>
+              </div>
+            </div>
+            <div class="api-mock-caption">↑ 첫 사용이면 "새 프로젝트에서 API 키 만들기" 선택 후 파란 버튼 클릭</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="api-step">
+        <div class="api-step-num">6</div>
+        <div class="api-step-body">
+          <div class="api-step-title">생성된 API 키를 복사하세요 ⭐ 가장 중요!</div>
+          <div class="api-step-desc">
+            <strong>"AIza"로 시작하는 긴 문자열</strong>이 API 키입니다. 오른쪽 복사 버튼을 클릭하세요.<br>
+            <span style="color:#EF4444;font-weight:700;">⚠️ 이 화면을 닫으면 다시 볼 수 없을 수 있으니, 반드시 지금 복사하세요!</span>
+          </div>
+          <div class="api-mock">
+            <div class="api-mock-body">
+              <div style="font-size:0.73rem;color:#475569;margin-bottom:6px;">✅ API 키가 생성되었습니다</div>
+              <div class="api-mock-key-box">
+                <div class="api-mock-key-val">AIzaSy••••••••••••••••••••••••••••••••</div>
+                <button class="api-mock-copy">복사</button>
+              </div>
+              <div class="api-mock-note">← 이 복사 버튼을 클릭하세요</div>
+            </div>
+            <div class="api-mock-caption">↑ "AIza"로 시작하는 문자열이 바로 API 키입니다</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7 -->
+      <div class="api-step">
+        <div class="api-step-num">7</div>
+        <div class="api-step-body">
+          <div class="api-step-title">복사한 키를 안전한 곳에 붙여넣어 보관하세요</div>
+          <div class="api-step-desc">
+            메모장, 개인 노트 앱, 또는 본인만 볼 수 있는 구글 문서에 저장하세요.<br>
+            나중에 AI 기능을 추가할 때 이 키를 코드에 붙여넣으면 됩니다.
+            <br><br>AI에게 키를 사용하는 코드를 요청할 때는 이렇게 말하세요:<br>
+            <code>Gemini API 키는 "AIzaSy..."입니다. 이 키를 사용해줘.</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- 주의사항 -->
+      <div class="api-warn-section">
+        <div class="api-warn-title">⚠️ 반드시 알아야 할 주의사항</div>
+
+        <div class="api-warn-item red">
+          <span class="api-warn-icon">🚫</span>
+          <div class="api-warn-text">
+            <strong>API 키를 절대 공개하지 마세요</strong><br>
+            GitHub(코드 공유 사이트), 카카오톡, 공유 구글 문서, SNS, 이메일에 절대 붙여넣지 마세요.
+            키가 공개되면 다른 사람이 내 계정으로 AI를 무제한 사용하게 됩니다.
+          </div>
+        </div>
+
+        <div class="api-warn-item red">
+          <span class="api-warn-icon">⚡</span>
+          <div class="api-warn-text">
+            <strong>키가 유출됐다면 즉시 삭제하고 새로 발급하세요</strong><br>
+            aistudio.google.com → API Keys → 해당 키 오른쪽 휴지통(🗑️) 클릭 → 삭제 후 새로 발급.
+            빠를수록 좋아요.
+          </div>
+        </div>
+
+        <div class="api-warn-item yellow">
+          <span class="api-warn-icon">📊</span>
+          <div class="api-warn-text">
+            <strong>무료 사용에는 한도가 있어요</strong><br>
+            무료 플랜에서는 1분에 보낼 수 있는 요청 수가 제한됩니다. 한도를 초과하면 잠시 대기 후 다시 사용 가능해요.
+            정확한 한도는 AI 스튜디오 → "Rate limits" 메뉴에서 확인할 수 있어요.
+          </div>
+        </div>
+
+        <div class="api-warn-item yellow">
+          <span class="api-warn-icon">💳</span>
+          <div class="api-warn-text">
+            <strong>무료 플랜은 신용카드가 필요 없어요</strong><br>
+            결제 정보를 입력하라는 화면이 나온다면 "무료로 계속하기"를 선택하거나, 그냥 닫으면 됩니다.
+            결제 정보를 입력하지 않아도 기본 기능은 모두 사용 가능해요.
+          </div>
+        </div>
+
+        <div class="api-warn-item green">
+          <span class="api-warn-icon">♻️</span>
+          <div class="api-warn-text">
+            <strong>키는 언제든지 삭제하고 새로 만들 수 있어요</strong><br>
+            같은 계정으로 여러 개의 키를 만들 수도 있어요. 쓰지 않는 키는 삭제하는 게 보안상 좋아요.
+          </div>
+        </div>
+
+        <div class="api-warn-item green">
+          <span class="api-warn-icon">✅</span>
+          <div class="api-warn-text">
+            <strong>오늘 워크숍에서는 API 키가 없어도 기본 앱을 만들 수 있어요</strong><br>
+            API 키는 Step 6 "기능 추가" 단계에서 Gemini AI 피드백 기능 등을 추가할 때만 필요해요.
+            기본 앱 완성이 먼저입니다!
+          </div>
+        </div>
+      </div>
+
+      <div class="api-modal-footer">
+        화면 예시는 실제 Google AI Studio UI를 기반으로 제작했으며, 구글 업데이트에 따라 화면이 다소 다를 수 있어요.<br>
+        문의: 강사에게 손 들어주세요 😊 &nbsp;|&nbsp; <button onclick="toggleApiGuide()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:0.76rem;">✕ 닫기</button>
+      </div>
+    </div>
+  </div>
+
   <div class="glossary-modal" id="glossaryModal" onclick="if(event.target===this)toggleGlossary()">
     <div class="glossary-content">
       <button class="glossary-close" onclick="toggleGlossary()" aria-label="닫기">×</button>
@@ -1180,6 +1491,10 @@
       var m = document.getElementById('glossaryModal');
       if (m) m.classList.toggle('open');
     }
+    function toggleApiGuide() {
+      var m = document.getElementById('apiGuideModal');
+      if (m) m.classList.toggle('open');
+    }
 
     // ── 작성 이유 팝업 ──
     function showWhy(e, id) {
@@ -1200,7 +1515,8 @@
       if (e.key === 'Escape') {
         var m = document.getElementById('glossaryModal');
         if (m && m.classList.contains('open')) m.classList.remove('open');
-        // why 팝업도 ESC로 닫기
+        var a = document.getElementById('apiGuideModal');
+        if (a && a.classList.contains('open')) a.classList.remove('open');
         document.querySelectorAll('.why-popup.open').forEach(function(p) { p.classList.remove('open'); });
       }
     });
