@@ -287,6 +287,46 @@
     @keyframes whyFadeIn { from{opacity:0;transform:translateY(-5px)} to{opacity:1;transform:translateY(0)} }
     @media print { .why-btn,.why-popup { display:none!important; } }
     @media(max-width:500px) { .why-popup { width:92vw;left:-12px; } }
+
+    /* ── Step 6 앱별 고도화 기능 카드 ── */
+    .upgrade-no-app { text-align:center;padding:32px 20px;color:var(--text-secondary);font-size:0.9rem;
+      border:2px dashed var(--border);border-radius:14px; }
+    .upgrade-no-app .una-icon { font-size:2rem;margin-bottom:10px; }
+    .upgrade-header { margin-bottom:16px; }
+    .upgrade-header-title { font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px; }
+    .upgrade-header-sub { font-size:0.82rem;color:var(--text-secondary); }
+    .upgrade-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    @media(max-width:600px){ .upgrade-grid { grid-template-columns:1fr; } }
+    .upgrade-card { background:var(--surface);border:1px solid var(--border);border-radius:12px;
+      padding:14px 16px;display:flex;flex-direction:column;gap:6px;transition:border-color 0.15s; }
+    .upgrade-card:hover { border-color:var(--accent); }
+    .upgrade-card-top { display:flex;align-items:center;gap:8px;margin-bottom:2px; }
+    .upgrade-card-icon { font-size:1.4rem;line-height:1; }
+    .upgrade-level { font-size:0.68rem;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:0.02em; }
+    .upgrade-level-1 { background:rgba(16,185,129,0.15);color:#10B981; }
+    .upgrade-level-2 { background:rgba(245,158,11,0.15);color:#F59E0B; }
+    .upgrade-level-3 { background:rgba(139,92,246,0.15);color:#8B5CF6; }
+    .upgrade-card-title { font-size:0.92rem;font-weight:700;color:var(--text); }
+    .upgrade-card-desc { font-size:0.79rem;color:var(--text-secondary);line-height:1.55;flex:1; }
+    .upgrade-prompt-btn { display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:5px 11px;
+      border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--text-secondary);
+      font-size:0.76rem;font-weight:600;cursor:pointer;transition:all 0.15s;align-self:flex-start; }
+    .upgrade-prompt-btn:hover,.upgrade-prompt-btn.open { background:rgba(13,148,136,0.10);
+      border-color:var(--accent);color:var(--accent); }
+    .upgrade-prompt-box { display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:10px; }
+    .upgrade-prompt-box.open { display:block;animation:upFadeIn 0.15s ease; }
+    @keyframes upFadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+    .upgrade-prompt-pre { background:#0f172a;color:#cbd5e1;border-radius:9px;padding:12px 14px;
+      font-size:0.76rem;font-family:'JetBrains Mono','Fira Code',monospace;white-space:pre-wrap;
+      line-height:1.65;margin-bottom:8px;word-break:break-all; }
+    .upgrade-copy-row { display:flex;justify-content:flex-end;margin-bottom:8px; }
+    .upgrade-copy-btn { display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:7px;
+      border:1px solid var(--border);background:var(--surface-hover);color:var(--text-secondary);
+      font-size:0.74rem;font-weight:600;cursor:pointer;transition:all 0.15s; }
+    .upgrade-copy-btn:hover { background:rgba(13,148,136,0.12);color:var(--accent);border-color:var(--accent); }
+    .upgrade-tip-box { background:rgba(13,148,136,0.07);border-left:3px solid var(--accent);
+      border-radius:0 8px 8px 0;padding:8px 12px;font-size:0.78rem;color:var(--text);line-height:1.65; }
+    .upgrade-tip-box strong { color:var(--accent); }
   </style>
 </head>
 <body>
@@ -959,13 +999,13 @@
       </div>
 
       <div class="prompt-section animate delay-2">
-        <div class="section-label">이런 기능을 추가해볼 수 있어요 (설문 응답 기반)</div>
-        <div class="vibe-list">
-          <div class="vibe-item">"학생이 이름을 입력하면 구글 시트에 자동으로 저장되게 해줘"</div>
-          <div class="vibe-item">"모바일에서도 잘 보이게 디자인을 개선해줘"</div>
-          <div class="vibe-item">"입력 후 확인 알림(토스트 메시지)을 추가해줘"</div>
-          <div class="vibe-item">"결과를 엑셀(CSV)로 다운로드하는 버튼을 추가해줘"</div>
-          <div class="vibe-item" style="border-color:#A78BFA;opacity:0.7">"(심화) Gemini AI가 학생 답변에 피드백을 달아주게 해줘" — <a href="구글AI스튜디오_API발급_안내서.html" style="color:#A78BFA;text-decoration:none">API 발급 안내서 참고</a></div>
+        <div class="section-label">내 앱에 추가할 수 있는 기능 — 예시 프롬프트 포함</div>
+        <div id="upgrade-container">
+          <div class="upgrade-no-app">
+            <div class="una-icon">🎯</div>
+            <strong>Step 0에서 앱을 선택하면</strong><br>
+            선택한 앱에 맞는 고도화 기능 아이디어와<br>바로 복사해서 쓸 수 있는 예시 프롬프트가 여기에 표시됩니다.
+          </div>
         </div>
       </div>
 
@@ -1194,6 +1234,7 @@
       document.getElementById('progressFill').style.width = (((idx + 1) / totalSteps) * 100) + '%';
       window.scrollTo({ top: 0, behavior: 'smooth' });
       document.getElementById('tab-' + idx).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (idx === 6) renderStep6Upgrades();
     }
 
     // ── App Gallery Selection ──
@@ -1453,6 +1494,244 @@
       }, 80);
     }
 
+    // ══════════════════════════════════════════════════════════
+    // Step 6 — 앱별 고도화 기능 데이터 + 렌더링
+    // ══════════════════════════════════════════════════════════
+    var upgradeFeatures = [
+      { name:'퀴즈 앱', features:[
+        { icon:'⏱️', lv:1, title:'타이머',
+          desc:'문제당 30초 제한, 시간 초과 시 자동 다음 문제',
+          prompt:'위 코드에 타이머 기능을 추가해줘.\n\n- 각 문제마다 30초 카운트다운 타이머 표시\n- 시간이 다 되면 자동으로 다음 문제로 넘어가기\n- 10초 이하가 되면 숫자가 빨간색으로 변경\n\n기존 퀴즈 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'30초를 다른 시간으로 바꾸고 싶다면 숫자만 수정해서 다시 요청하면 돼요.' },
+        { icon:'📝', lv:1, title:'오답노트',
+          desc:'틀린 문제만 모아서 퀴즈 끝에 다시 보여주기',
+          prompt:'위 코드에 오답노트 기능을 추가해줘.\n\n- 퀴즈가 끝나면 틀린 문제만 모아서 다시 보여주기\n- 오답 화면에 "다시 풀기" 버튼 추가\n- 최종 결과 화면에 맞힌 수 / 전체 수 표시\n\n기존 퀴즈 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'"다시 풀기" 대신 "처음부터"로 돌아가게 하려면 "다시 풀기 버튼을 처음 시작으로 바꿔줘"라고 추가 요청하세요.' },
+        { icon:'📊', lv:2, title:'점수 시트 저장',
+          desc:'이름 입력 → 구글 시트에 점수·날짜 자동 기록',
+          prompt:'위 코드에 점수 저장 기능을 추가해줘.\n\n- 퀴즈 시작 전 학생 이름 입력 칸 추가\n- 퀴즈 완료 시 이름·점수·날짜시간을 구글 시트(ID: [여기에 시트 ID 붙여넣기])에 자동 저장\n- 저장 완료 후 "기록 완료!" 토스트 메시지 표시\n\n기존 퀴즈 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'[여기에 시트 ID 붙여넣기] 부분에 구글 시트 URL 중간의 긴 영문자 코드를 넣으세요.\n예: docs.google.com/spreadsheets/d/[이 부분]/edit' },
+        { icon:'🔀', lv:2, title:'랜덤 출제',
+          desc:'구글 시트 문제 은행에서 매번 다른 순서로 출제',
+          prompt:'위 코드를 수정해줘.\n\n- 문제가 시작될 때마다 문제 순서를 랜덤으로 섞기\n- 구글 시트(ID: [시트 ID])의 A열 문제, B열 정답, C~F열 선택지에서 자동으로 불러오게 변경\n\n기존 UI와 채점 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'시트 열 구성을 바꾸고 싶다면 "A열: 문제, B열: 정답"처럼 원하는 구성을 직접 설명해서 요청하세요.' },
+        { icon:'📈', lv:3, title:'교사 결과판',
+          desc:'문제별 정답률, 평균 점수를 실시간 집계하는 교사 화면',
+          prompt:'위 코드에 교사용 결과 화면을 추가해줘.\n\n- URL 뒤에 ?teacher=1 을 붙이면 교사용 화면 열리게 구현\n- 교사 화면: 문제별 정답률 막대 그래프 (Chart.js 사용)\n- 제출 학생 수·평균 점수·최고점·최저점 카드 표시\n- 30초마다 자동 새로고침 (google.script.run 사용)\n\n기존 학생용 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'학생이 교사 화면에 접근 못 하게 하려면 "?teacher=비밀번호 형태로 접근 제한해줘"라고 추가하세요.' }
+      ]},
+      { name:'의견 수집 앱', features:[
+        { icon:'🙈', lv:1, title:'익명/실명 선택',
+          desc:'제출 전 본인 이름 넣을지 선택하는 토글 버튼',
+          prompt:'위 코드에 익명/실명 선택 기능을 추가해줘.\n\n- 의견 입력창 위에 "익명으로 제출 / 이름으로 제출" 토글 버튼 추가\n- 이름 제출 선택 시 이름 입력 칸 표시\n- 익명 선택 시 "익명"으로 자동 표기\n\n기존 의견 수집·표시 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'"익명" 대신 다른 텍스트(예: "비공개")로 바꾸고 싶으면 프롬프트에서 직접 명시하세요.' },
+        { icon:'👍', lv:1, title:'공감 버튼',
+          desc:'다른 학생 의견에 👍 클릭해서 동의 수 표시',
+          prompt:'위 코드에 공감 버튼 기능을 추가해줘.\n\n- 화면의 각 의견 카드에 👍 공감 버튼 추가\n- 버튼 클릭 시 공감 수 +1 증가하고 시트에 저장\n- 공감 수가 많은 의견이 위로 정렬되는 옵션 버튼 추가\n- 한 기기에서 같은 의견에 여러 번 공감 못 하게 제한 (로컬스토리지 활용)\n\n기존 의견 수집·표시 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'공감 제한을 없애고 싶다면 "한 의견에 여러 번 공감 가능하게 해줘"라고 요청하세요.' },
+        { icon:'📺', lv:2, title:'발표 모드',
+          desc:'교사가 선택한 의견을 화면 전체에 크게 띄우기',
+          prompt:'위 코드에 발표 모드 기능을 추가해줘.\n\n- 교사 화면에서 의견 카드를 클릭하면 전체 화면 발표 모드로 전환\n- 발표 모드: 선택 의견 텍스트가 화면 중앙에 크게 표시 (폰트 크기 2.5rem 이상)\n- 발표자 이름, 공감 수도 함께 표시\n- ESC 키 또는 닫기 버튼으로 발표 모드 종료\n\n기존 의견 수집 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'발표 화면 배경색을 바꾸고 싶다면 "발표 모드 배경색을 진한 파란색으로"처럼 색상을 지정하세요.' },
+        { icon:'🗂️', lv:2, title:'카테고리 분류',
+          desc:'제출 시 긍정/부정/질문 중 하나 선택',
+          prompt:'위 코드에 카테고리 선택 기능을 추가해줘.\n\n- 의견 제출 전 "긍정 / 부정 / 질문 / 기타" 중 하나 선택하는 버튼 추가\n- 교사 화면에서 카테고리별 탭으로 필터링해서 보기 가능\n- 카테고리별 의견 수 집계 표시\n\n기존 의견 수집·표시 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'카테고리 이름을 바꾸고 싶다면 "긍정/부정/질문 대신 찬성/반대/모르겠다로 바꿔줘"처럼 요청하세요.' },
+        { icon:'☁️', lv:3, title:'워드클라우드',
+          desc:'많이 나온 단어를 크기로 시각화해서 보여주기',
+          prompt:'위 코드에 워드클라우드 시각화를 추가해줘.\n\n- 교사 화면 하단에 워드클라우드 탭 추가\n- 수집된 의견에서 자주 등장하는 단어를 추출해 워드클라우드로 시각화\n- 자주 나온 단어일수록 크게 표시\n- "은/는/이/가/을/를/의" 같은 조사는 제외하고 추출\n\n기존 의견 수집 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'제외할 단어를 추가하고 싶다면 "도/에서/으로 도 제외해줘"처럼 요청하세요.' }
+      ]},
+      { name:'모둠 편성기', features:[
+        { icon:'🎭', lv:1, title:'역할 자동 배정',
+          desc:'편성 후 조장·발표자·기록자 랜덤 배정',
+          prompt:'위 코드에 역할 자동 배정 기능을 추가해줘.\n\n- 모둠 편성 후 각 모둠원에게 조장·발표자·기록자·도우미 역할을 랜덤으로 배정\n- 역할은 이름 옆에 뱃지로 표시\n- "역할 다시 배정" 버튼 추가\n\n기존 모둠 편성 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'역할 이름을 바꾸고 싶다면 "조장/발표자/기록자 대신 리더/발표/기록/도움으로 바꿔줘"처럼 요청하세요.' },
+        { icon:'🖨️', lv:1, title:'인쇄용 출력',
+          desc:'모둠 결과를 칠판에 붙일 수 있게 깔끔하게 정리',
+          prompt:'위 코드에 인쇄용 출력 기능을 추가해줘.\n\n- "인쇄하기" 버튼 클릭 시 모둠 결과만 깔끔하게 정리된 인쇄용 화면으로 전환\n- 인쇄 화면: 모둠별 이름 카드, 흰 배경, 불필요한 버튼 제거\n- CSS @media print 규칙 적용으로 인쇄 시 자동 최적화\n\n기존 모둠 편성 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'인쇄 시 카드 크기를 조정하고 싶다면 "인쇄 시 모둠 카드를 A4 기준 4개씩 배치해줘"처럼 요청하세요.' },
+        { icon:'⚠️', lv:2, title:'분리 조건 설정',
+          desc:'특정 학생은 같은 조 안 되게, 남녀 비율 지정',
+          prompt:'위 코드에 편성 조건 설정 기능을 추가해줘.\n\n- "함께 안 될 학생" 입력 칸: 이름 두 개 입력하면 같은 조에 배치되지 않음\n- 남녀 비율 균형 옵션: 성별 정보 입력 시 각 조에 남녀가 고르게 배치\n- 조건이 설정된 경우 편성 결과 화면에 "조건 적용됨" 표시\n\n기존 모둠 편성 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'"반드시 같은 조여야 하는 학생 쌍"도 추가하고 싶다면 해당 기능도 함께 요청하세요.' },
+        { icon:'📜', lv:2, title:'이전 이력 저장',
+          desc:'지난 모둠과 최대한 겹치지 않게 자동 처리',
+          prompt:'위 코드에 모둠 이력 저장 기능을 추가해줘.\n\n- "편성 기록 저장" 버튼: 오늘 모둠 결과를 구글 시트(ID: [시트 ID])에 날짜와 함께 저장\n- 새로 편성 시 이전 기록을 불러와 같은 조였던 학생이 또 같은 조가 되지 않게 가중치 조정\n- 이전 이력 없을 경우 완전 랜덤으로 편성\n\n기존 모둠 편성 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'몇 차시까지의 이력을 고려할지 설정하고 싶다면 "최근 3번의 편성 이력만 참고해줘"처럼 요청하세요.' }
+      ]},
+      { name:'상담 예약 앱', features:[
+        { icon:'🔢', lv:1, title:'남은 자리 표시',
+          desc:'시간대별 "잔여 N자리" 실시간 표시, 마감 시 비활성화',
+          prompt:'위 코드에 잔여 자리 실시간 표시 기능을 추가해줘.\n\n- 각 시간대 버튼에 "잔여 2자리" / "마감" 표시\n- 마감된 시간대는 버튼 비활성화 및 회색으로 표시\n- 페이지 로드 시 자동으로 현재 예약 현황 확인\n\n기존 예약 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'시간대당 최대 예약 수를 변경하고 싶다면 "각 시간대 최대 3명까지 예약 가능하게 해줘"처럼 요청하세요.' },
+        { icon:'🔍', lv:1, title:'예약 확인 화면',
+          desc:'학부모가 이름 입력해서 본인 예약 시간 확인',
+          prompt:'위 코드에 예약 확인 기능을 추가해줘.\n\n- "예약 확인" 탭 추가\n- 이름을 입력하면 예약된 시간대와 날짜를 보여주는 화면\n- 예약 정보가 없을 경우 "예약 내역이 없습니다" 안내 표시\n\n기존 예약 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'이름 대신 학번으로 조회하고 싶다면 "이름 대신 학번으로 조회하게 해줘"라고 바꿔서 요청하세요.' },
+        { icon:'📋', lv:2, title:'상담 메모 입력',
+          desc:'예약 시 희망 상담 내용을 미리 적어서 교사에게 전달',
+          prompt:'위 코드에 상담 희망 내용 입력 기능을 추가해줘.\n\n- 예약 완료 전 "상담 희망 내용" 텍스트 입력 칸 추가 (선택 사항)\n- 입력 내용이 구글 시트의 메모 열에 저장\n- 교사용 일정표에서 각 예약자의 메모 내용도 함께 표시\n\n기존 예약 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'메모 글자 수를 제한하려면 "메모는 최대 100자까지만 입력 가능하게 해줘"라고 추가하세요.' },
+        { icon:'🗓️', lv:2, title:'교사 당일 일정표',
+          desc:'예약 순서대로 정리된 상담 일정 자동 생성 및 출력',
+          prompt:'위 코드에 교사용 당일 일정표 기능을 추가해줘.\n\n- URL 뒤에 ?admin=1 을 붙이면 교사용 화면 접속\n- 교사 화면: 당일 예약 현황을 시간 순서대로 정리한 표 표시\n- 각 행에 예약자 이름·시간·상담 메모 표시\n- "인쇄하기" 버튼으로 일정표 출력 가능\n\n기존 예약 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'교사 화면에 비밀번호를 추가하고 싶다면 "?admin=비밀번호 형태로 접근 제한해줘"라고 요청하세요.' }
+      ]},
+      { name:'업무 체크리스트', features:[
+        { icon:'📊', lv:1, title:'완료율 표시',
+          desc:'"오늘 진행률 67%" 퍼센트 바 실시간 업데이트',
+          prompt:'위 코드에 완료율 표시 기능을 추가해줘.\n\n- 상단에 "진행률: 67% (10/15개 완료)" 형태의 진행 바 추가\n- 체크박스 클릭할 때마다 진행 바 실시간 업데이트\n- 100% 달성 시 축하 메시지 ("오늘 할 일 완료! 🎉") 표시\n\n기존 체크리스트 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'진행 바 색상을 바꾸고 싶다면 "진행 바를 초록색으로 해줘"처럼 요청하세요.' },
+        { icon:'🚨', lv:1, title:'마감일 색상 경고',
+          desc:'D-3 이하 빨강, D-7 이하 노랑 자동 표시',
+          prompt:'위 코드에 마감일 색상 경고 기능을 추가해줘.\n\n- 각 항목에 마감일 입력 칸 추가 (선택 사항)\n- D-3 이하: 항목 배경 빨간색 + "⚠️ 마감 임박" 뱃지\n- D-4 ~ D-7: 항목 배경 노란색 + "📌 곧 마감" 뱃지\n- D-8 이상: 기본 색상 유지\n\n기존 체크리스트 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'기준일을 바꾸고 싶다면 "D-5 이하는 빨강, D-10 이하는 노랑으로 바꿔줘"처럼 숫자를 수정해서 요청하세요.' },
+        { icon:'🗂️', lv:2, title:'카테고리 필터',
+          desc:'수업준비/행정/학생관리 탭으로 분류해서 보기',
+          prompt:'위 코드에 카테고리 분류 기능을 추가해줘.\n\n- 항목 추가 시 "수업준비 / 행정 / 학생관리 / 기타" 카테고리 선택 드롭다운 추가\n- 상단에 카테고리 탭 버튼으로 해당 카테고리만 필터링해서 보기\n- 각 탭에 해당 카테고리 미완료 항목 수 뱃지 표시\n\n기존 체크리스트 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'카테고리 이름을 바꾸고 싶다면 "수업준비/행정/학생관리 대신 월요일/화요일/수요일로 바꿔줘"처럼 요청하세요.' },
+        { icon:'💾', lv:2, title:'완료 이력 시트 저장',
+          desc:'체크 완료 시 완료일시와 함께 구글 시트에 자동 기록',
+          prompt:'위 코드에 완료 항목 자동 저장 기능을 추가해줘.\n\n- 체크박스를 완료로 표시할 때 항목 내용·완료일시를 구글 시트(ID: [시트 ID])에 자동 저장\n- 이미 저장된 항목을 체크 해제하면 시트에서도 삭제\n\n기존 체크리스트 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'삭제 없이 취소 표시만 남기고 싶다면 "체크 해제 시 시트에서 삭제하지 말고 취소 표시만 해줘"라고 요청하세요.' }
+      ]},
+      { name:'플래시카드 암기', features:[
+        { icon:'🔁', lv:1, title:'모르는 카드만 다시',
+          desc:'✕ 표시한 카드만 뽑아서 반복 학습',
+          prompt:'위 코드에 모르는 카드 반복 기능을 추가해줘.\n\n- 각 카드 하단에 "알았어요 ✓" / "다시 볼게요 ✕" 버튼 추가\n- 전체 카드를 다 보고 나면 "다시 볼 카드만 보기" 버튼 표시\n- 클릭 시 ✕ 표시한 카드만 다시 반복\n\n기존 카드 넘기기 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'"알았어요/다시 볼게요" 버튼 문구를 바꾸고 싶다면 "O/X 버튼으로 바꿔줘"처럼 요청하세요.' },
+        { icon:'📈', lv:1, title:'학습 진도 표시',
+          desc:'"15/30 완료" 진행 바 상단에 표시',
+          prompt:'위 코드에 학습 진도 표시 기능을 추가해줘.\n\n- 상단에 "15 / 30 카드" 형태로 현재 진도 표시\n- 진행 바(progress bar)로 시각화\n- 마지막 카드에서 "학습 완료! 🎉" 화면 표시 후 처음부터 다시 보기 버튼\n\n기존 카드 넘기기 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'브라우저를 닫아도 진도가 유지되게 하려면 "로컬스토리지에 진도 저장해줘"라고 추가 요청하세요.' },
+        { icon:'📋', lv:2, title:'시트에서 단어 불러오기',
+          desc:'구글 시트에 단어 추가하면 자동으로 카드에 반영',
+          prompt:'위 코드를 수정해줘.\n\n- 카드 내용을 구글 시트(ID: [시트 ID])에서 불러오게 변경\n- 시트 구성: A열 앞면(단어), B열 뒷면(뜻/설명)\n- 시트에 행을 추가하면 자동으로 새 카드로 반영\n- 로딩 중 "카드를 불러오는 중..." 메시지 표시\n\n기존 카드 UI는 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'열 구성을 바꾸고 싶다면 "A열: 영어, B열: 한국어, C열: 예문"처럼 원하는 구성을 명시하세요.' },
+        { icon:'⌨️', lv:2, title:'타이핑 시험 모드',
+          desc:'앞면 보고 뒷면을 직접 타이핑해서 정답 체크',
+          prompt:'위 코드에 타이핑 시험 모드를 추가해줘.\n\n- 상단에 "보기 모드 / 시험 모드" 전환 버튼 추가\n- 시험 모드: 앞면(문제)만 표시하고 정답을 직접 타이핑하는 입력 칸 제공\n- 엔터 또는 "확인" 버튼 클릭 시 정답 여부 표시\n- 시험 종료 후 맞힌 수 / 전체 수 결과 표시\n\n기존 카드 보기 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'대소문자·띄어쓰기 구분 없이 채점하려면 "대소문자와 앞뒤 공백은 무시하고 채점해줘"라고 요청하세요.' },
+        { icon:'🔊', lv:3, title:'발음 읽어주기 (TTS)',
+          desc:'카드 클릭 시 단어를 소리내어 읽어주기',
+          prompt:'위 코드에 텍스트 음성 변환(TTS) 기능을 추가해줘.\n\n- 카드 우측 상단에 🔊 스피커 버튼 추가\n- 클릭 시 Web Speech API로 앞면 텍스트를 소리내어 읽어주기\n- 언어 선택: 한국어(ko-KR) / 영어(en-US) / 일본어(ja-JP) 중 선택\n\n기존 카드 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'특정 언어만 필요하다면 "영어 발음만 지원하게 해줘"처럼 단순화해서 요청하세요.' }
+      ]},
+      { name:'의견 칸반 보드', features:[
+        { icon:'🎨', lv:1, title:'카드 색상 구분',
+          desc:'제출 시간대별로 카드 색 자동 구분',
+          prompt:'위 코드에 카드 색상 구분 기능을 추가해줘.\n\n- 카드 제출 시간을 기준으로 색상 자동 부여 (오전 = 파랑, 오후 = 주황)\n- 또는 학생이 제출 시 색상을 직접 선택할 수 있게 색상 팔레트 3~4개 제공\n- 색상은 카드 왼쪽 테두리로 표시\n\n기존 드래그 분류·새로고침 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'시간대 기준을 바꾸고 싶다면 "1~4교시는 파랑, 5교시 이후는 주황으로 해줘"처럼 요청하세요.' },
+        { icon:'🔢', lv:1, title:'컬럼 카드 수 뱃지',
+          desc:'각 열 제목 옆에 현재 카드 수 실시간 표시',
+          prompt:'위 코드에 컬럼별 카드 수 표시 기능을 추가해줘.\n\n- 각 컬럼 제목 옆에 현재 카드 수를 뱃지로 표시 (예: "미분류 (8)")\n- 카드를 이동할 때마다 뱃지 숫자 자동 업데이트\n- 카드가 없는 컬럼은 "비어있음" 안내 텍스트 표시\n\n기존 드래그 분류·새로고침 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'"비어있음" 대신 다른 안내 메시지로 바꾸고 싶다면 직접 텍스트를 명시하세요.' },
+        { icon:'💾', lv:2, title:'분류 결과 일괄 저장',
+          desc:'"시트에 저장" 버튼으로 현재 분류 상태 스냅샷 기록',
+          prompt:'위 코드에 분류 결과 저장 기능을 추가해줘.\n\n- 교사 화면에 "분류 결과 시트에 저장" 버튼 추가\n- 클릭 시 현재 모든 카드의 내용·분류 컬럼·저장시각을 구글 시트에 일괄 저장\n- 저장 성공 시 "저장 완료! 시트에서 확인하세요" 토스트 메시지 표시\n\n기존 드래그·새로고침 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'저장할 때마다 누적 기록을 남기려면 "저장 시 기존 내용 덮어쓰지 말고 새 행으로 추가해줘"라고 요청하세요.' },
+        { icon:'✏️', lv:2, title:'학생 카드 수정',
+          desc:'제출 후 본인 카드를 직접 수정하거나 삭제',
+          prompt:'위 코드에 학생 카드 수정·삭제 기능을 추가해줘.\n\n- 학생이 본인 이름을 입력하면 본인이 제출한 카드만 수정/삭제 가능\n- 카드 위에 마우스를 올리면 "수정 ✏️" "삭제 🗑️" 버튼 표시\n- 수정 시 기존 내용이 입력창에 불러와지고 저장 시 시트에 업데이트\n\n기존 드래그·새로고침 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'학생 확인을 더 엄격하게 하려면 "이름 외에 학번도 함께 입력해야 수정 가능하게 해줘"라고 요청하세요.' }
+      ]},
+      { name:'업무 매뉴얼 검색기', features:[
+        { icon:'🕐', lv:1, title:'최근 검색어',
+          desc:'자주 쓰는 검색어 최근 5개를 버튼으로 표시',
+          prompt:'위 코드에 최근 검색어 기능을 추가해줘.\n\n- 검색창 아래에 최근 검색어 5개를 버튼 형태로 표시\n- 이전 검색어 버튼 클릭 시 해당 검색어로 즉시 검색\n- 브라우저 로컬스토리지에 저장해서 새로고침 후에도 유지\n- "검색어 초기화" 버튼 추가\n\n기존 PDF 업로드·검색 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'저장 개수를 늘리려면 "최근 검색어 10개까지 저장해줘"로 숫자만 바꿔서 요청하면 돼요.' },
+        { icon:'🗑️', lv:1, title:'파일 삭제 버튼',
+          desc:'업로드 목록에서 오래된 파일 삭제',
+          prompt:'위 코드에 업로드된 파일 삭제 기능을 추가해줘.\n\n- 업로드 목록의 각 항목 오른쪽에 "삭제 🗑️" 버튼 추가\n- 클릭 시 "정말 삭제하시겠습니까?" 확인 대화상자 표시 후 구글 시트에서 해당 행 삭제\n- 삭제 후 목록 자동 새로고침\n\n기존 PDF 업로드·OCR·검색 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'실수 삭제를 방지하려면 "삭제 후 5초 안에 되돌리기 가능한 취소 버튼도 추가해줘"라고 요청하세요.' },
+        { icon:'📅', lv:2, title:'날짜 필터',
+          desc:'등록일 기준 이번 달/최근 3개월/직접 입력 필터',
+          prompt:'위 코드에 날짜 필터 기능을 추가해줘.\n\n- 업로드 목록과 검색 결과에 날짜 필터 추가\n- 필터 옵션: "전체 / 이번 달 / 최근 3개월 / 직접 입력(시작일~종료일)"\n- 선택한 기간 내에 업로드된 파일만 표시\n\n기존 PDF 업로드·검색 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'학기 단위 필터가 필요하다면 "1학기(3~8월)/2학기(9~2월) 빠른 선택 버튼도 추가해줘"라고 요청하세요.' },
+        { icon:'✏️', lv:3, title:'웹에서 직접 편집',
+          desc:'업로드 없이 웹에서 매뉴얼 내용 직접 수정·저장',
+          prompt:'위 코드에 매뉴얼 내용 직접 편집 기능을 추가해줘.\n\n- 세 번째 탭 "편집" 추가\n- 업로드 목록에서 파일 선택 → 추출된 텍스트가 편집 가능한 텍스트에어리어에 표시\n- "저장" 버튼 클릭 시 수정된 내용을 구글 시트에 업데이트\n- 저장 시 "마지막 수정: 날짜시간" 형태로 수정 일시 자동 기록\n\n기존 PDF 업로드·검색 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'편집 화면에서 서식도 적용하고 싶다면 "기본 마크다운 서식도 지원하게 해줘"라고 요청하세요.' }
+      ]},
+      { name:'데이터 대시보드', features:[
+        { icon:'📥', lv:1, title:'차트 이미지 저장',
+          desc:'"📥 PNG로 저장" 버튼으로 차트를 이미지로 다운로드',
+          prompt:'위 코드에 차트 이미지 저장 기능을 추가해줘.\n\n- 차트 오른쪽 상단에 "📥 PNG로 저장" 버튼 추가\n- 클릭 시 현재 차트를 PNG 이미지로 다운로드\n- 파일명: "dashboard_날짜.png" 형식으로 자동 설정\n\n기존 차트·요약 카드·새로고침 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'보고서용 고해상도가 필요하다면 "devicePixelRatio 2배 고해상도로 저장해줘"라고 요청하세요.' },
+        { icon:'📅', lv:2, title:'날짜 범위 필터',
+          desc:'시작일~종료일 선택해서 해당 기간만 차트에 표시',
+          prompt:'위 코드에 날짜 범위 필터 기능을 추가해줘.\n\n- 차트 위에 시작일·종료일 날짜 선택기(date input) 추가\n- 날짜 변경 시 해당 기간 데이터만 차트와 요약 카드에 반영\n- "전체 기간 보기" 버튼으로 필터 초기화\n- 선택된 기간이 차트 제목 아래에 표시\n\n기존 차트 전환·요약 카드 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'학기 단위 버튼을 추가하고 싶다면 "1학기(3~8월)/2학기(9~2월) 빠른 선택 버튼도 추가해줘"라고 요청하세요.' },
+        { icon:'☑️', lv:2, title:'항목 선택 필터',
+          desc:'보고 싶은 항목만 체크박스로 골라서 차트에 표시',
+          prompt:'위 코드에 항목 선택 필터 기능을 추가해줘.\n\n- 차트 위에 데이터 항목별 체크박스 필터 추가\n- 체크된 항목만 차트에 표시\n- "전체 선택 / 전체 해제" 버튼 추가\n- 선택 변경 시 차트와 요약 카드 즉시 업데이트\n\n기존 차트 전환·날짜 필터 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'항목이 많다면 "체크박스 대신 드롭다운 다중 선택으로 바꿔줘"라고 요청하면 더 깔끔해집니다.' },
+        { icon:'🎯', lv:3, title:'목표치 기준선',
+          desc:'차트에 목표값 가로선 + 초과/미달 색상 자동 구분',
+          prompt:'위 코드에 목표치 기준선 기능을 추가해줘.\n\n- 목표값을 입력하는 칸 추가 (숫자 입력)\n- 막대/꺾은선 차트에 목표값 가로 점선 표시\n- 목표 초과 항목은 초록색, 미달 항목은 빨간색으로 자동 색상 변경\n- 요약 카드에 "목표 달성률: 75%" 카드 추가\n\n기존 차트·요약 카드 기능은 그대로 유지하고, 수정된 전체 코드를 코드 블록으로만 주고 설명은 3줄 이내로.',
+          tip:'목표값을 시트에서 자동으로 가져오고 싶다면 "목표값을 구글 시트 특정 셀에서 불러오게 해줘"라고 요청하세요.' }
+      ]}
+    ];
+
+    function hesc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    var lvLabel = ['','⭐ 기본','⭐⭐ 응용','⭐⭐⭐ 심화'];
+    var lvClass = ['','upgrade-level-1','upgrade-level-2','upgrade-level-3'];
+
+    function renderStep6Upgrades() {
+      var container = document.getElementById('upgrade-container');
+      if (!container) return;
+      if (selectedAppIdx === null || selectedAppIdx === undefined) {
+        container.innerHTML = '<div class="upgrade-no-app"><div class="una-icon">🎯</div><strong>Step 0에서 앱을 선택하면</strong><br>선택한 앱에 맞는 고도화 기능 아이디어와<br>바로 복사해서 쓸 수 있는 예시 프롬프트가 여기에 표시됩니다.</div>';
+        return;
+      }
+      var app = upgradeFeatures[selectedAppIdx];
+      if (!app) return;
+      var html = '<div class="upgrade-header"><div class="upgrade-header-title">✨ ' + hesc(app.name) + ' — 고도화 기능 예시</div><div class="upgrade-header-sub">원하는 기능을 골라 예시 프롬프트를 복사한 뒤, AI에게 그대로 붙여넣으세요.</div></div><div class="upgrade-grid">';
+      app.features.forEach(function(f, i) {
+        var uid = 'uf-' + selectedAppIdx + '-' + i;
+        html += '<div class="upgrade-card">';
+        html += '<div class="upgrade-card-top"><span class="upgrade-card-icon">' + f.icon + '</span><span class="upgrade-level ' + lvClass[f.lv] + '">' + lvLabel[f.lv] + '</span></div>';
+        html += '<div class="upgrade-card-title">' + hesc(f.title) + '</div>';
+        html += '<div class="upgrade-card-desc">' + hesc(f.desc) + '</div>';
+        html += '<button class="upgrade-prompt-btn" id="btn-' + uid + '" onclick="toggleUpgradePrompt(\'' + uid + '\')">📋 예시 프롬프트 보기</button>';
+        html += '<div class="upgrade-prompt-box" id="' + uid + '">';
+        html += '<div class="upgrade-prompt-pre" id="pre-' + uid + '">' + hesc(f.prompt) + '</div>';
+        html += '<div class="upgrade-copy-row"><button class="upgrade-copy-btn" id="cpbtn-' + uid + '" onclick="copyUpgradePrompt(\'' + uid + '\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 복사</button></div>';
+        html += '<div class="upgrade-tip-box">💡 <strong>이렇게 보완하세요</strong><br>' + hesc(f.tip) + '</div>';
+        html += '</div></div>';
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function toggleUpgradePrompt(uid) {
+      var box = document.getElementById(uid);
+      var btn = document.getElementById('btn-' + uid);
+      if (!box) return;
+      var isOpen = box.classList.contains('open');
+      document.querySelectorAll('.upgrade-prompt-box.open').forEach(function(b) { b.classList.remove('open'); });
+      document.querySelectorAll('.upgrade-prompt-btn.open').forEach(function(b) { b.classList.remove('open'); });
+      if (!isOpen) { box.classList.add('open'); if (btn) btn.classList.add('open'); }
+    }
+
+    function copyUpgradePrompt(uid) {
+      var pre = document.getElementById('pre-' + uid);
+      var btn = document.getElementById('cpbtn-' + uid);
+      if (!pre || !btn) return;
+      navigator.clipboard.writeText(pre.textContent).then(function() {
+        btn.textContent = '✓ 복사됨';
+        btn.style.color = 'var(--positive)';
+        setTimeout(function() {
+          btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 복사';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
     function selectApp(idx) {
       selectedAppIdx = idx;
 
@@ -1478,6 +1757,8 @@
         restoreStep1Generic();
         goToStep(1);
       }
+      // Step 6에 이미 있는 경우 즉시 업데이트
+      if (currentStep === 6) renderStep6Upgrades();
     }
 
     // ── Chip Selection ──
